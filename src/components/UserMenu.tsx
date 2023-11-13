@@ -41,7 +41,7 @@ export default function UserMenu() {
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">Elon</p>
             <p className="text-xs leading-none text-muted-foreground">
-              musk@spacex.com
+              elon.musk@spacex.com
             </p>
           </div>
         </DropdownMenuLabel>
