@@ -7,6 +7,8 @@ import {
 } from '@tanstack/react-router'
 import { useUserStore } from '@/stores/userStore.ts'
 
+import Root from './routes/Root.tsx'
+
 // Register router for maximum type safety
 declare module '@tanstack/react-router' {
   interface Register {
@@ -15,7 +17,9 @@ declare module '@tanstack/react-router' {
 }
 
 // Create a root route
-const rootRoute = new RootRoute({})
+const rootRoute = new RootRoute({
+  component: Root,
+})
 
 const DashboardRoute = new Route({
   beforeLoad: () => {
