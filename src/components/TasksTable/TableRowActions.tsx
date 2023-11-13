@@ -14,6 +14,7 @@ import {
   DropdownMenu,
 } from '@/components/ui/dropdown-menu'
 import { DotsHorizontalIcon } from '@radix-ui/react-icons'
+import { useToast } from '@/components/ui/use-toast.ts'
 import { useTasksStore } from '@/stores/tasksStore.ts'
 import { Button } from '@/components/ui/button'
 import { Row } from '@tanstack/react-table'
@@ -28,6 +29,15 @@ export default function TableRowActions<TData extends TTask>({
 }: TableRowActionsProps<TData>) {
   const { setEditTaskId, updateLabel, deleteTask } = useTasksStore()
   const task = row.original
+  const { toast } = useToast()
+
+  const handleDelete = () => {
+    deleteTask(task.id)
+    toast({
+      description: `Task ${task.id} has been successfully deleted ❌`,
+      title: 'Success!',
+    })
+  }
 
   return (
     <DropdownMenu>
@@ -63,7 +73,7 @@ export default function TableRowActions<TData extends TTask>({
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => deleteTask(task.id)}>
+        <DropdownMenuItem onClick={handleDelete}>
           Delete
           <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
         </DropdownMenuItem>

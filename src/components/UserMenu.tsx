@@ -9,6 +9,7 @@ import {
   DropdownMenu,
 } from '@/components/ui/dropdown-menu'
 import { AvatarFallback, AvatarImage, Avatar } from '@/components/ui/avatar'
+import { useToast } from '@/components/ui/use-toast.ts'
 import { useNavigate } from '@tanstack/react-router'
 import { useUserStore } from '@/stores/userStore.ts'
 import { Button } from '@/components/ui/button'
@@ -16,6 +17,7 @@ import { Button } from '@/components/ui/button'
 export default function UserMenu() {
   const { resetUserAuth } = useUserStore()
   const navigate = useNavigate()
+  const { toast } = useToast()
 
   const handleLogOut = () => {
     resetUserAuth()
@@ -45,15 +47,37 @@ export default function UserMenu() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() =>
+              toast({
+                description:
+                  'Twitter team has been successfully fired. Bye-bye losers 👋',
+                title: 'Success!',
+              })
+            }
+          >
             Fire all team
             <DropdownMenuShortcut>⌘Del</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() =>
+              toast({
+                description: 'Falcon 9 has been successfully launched 🚀',
+                title: 'Success!',
+              })
+            }
+          >
             Launch a rocket
             <DropdownMenuShortcut>⌘R</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() =>
+              toast({
+                description: 'You received 1000 Doge on your wallet 💸',
+                title: 'Success!',
+              })
+            }
+          >
             Buy Dogecoin
             <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
           </DropdownMenuItem>

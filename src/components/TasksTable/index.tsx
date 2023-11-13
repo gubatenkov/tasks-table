@@ -18,7 +18,9 @@ import {
   Table,
 } from '@/components/ui/table'
 import { useTableStore } from '@/stores/tableStore.ts'
+import { useEffect, useState } from 'react'
 
+import TableRowSkeleton from './TableRowSkeleton.tsx'
 import TablePagination from './TablePagination'
 import TableToolbar from './TableToolbar'
 
@@ -32,6 +34,7 @@ export default function TasksTable<TData, TValue>({
   data,
 }: TableProps<TData, TValue>) {
   const { setColumnFilters, columnFilters } = useTableStore()
+  const [isLoading, setIsLoading] = useState(true)
 
   const table = useReactTable({
     getFacetedUniqueValues: getFacetedUniqueValues(),
@@ -48,6 +51,14 @@ export default function TasksTable<TData, TValue>({
     columns,
     data,
   })
+
+  // Emulating of fetching table data via API
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setIsLoading(false)
+    }, 1500)
+    return () => clearTimeout(timeoutId)
+  }, [])
 
   return (
     <div className="space-y-4">
@@ -73,7 +84,9 @@ export default function TasksTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {isLoading ? (
+              <TableRowSkeleton rowsNumber={5} />
+            ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   data-state={row.getIsSelected() && 'selected'}
@@ -102,7 +115,7 @@ export default function TasksTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <TablePagination table={table} />
+      {isLoading ? null : <TablePagination table={table} />}
     </div>
   )
 }

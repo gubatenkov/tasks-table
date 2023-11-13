@@ -1,6 +1,7 @@
 import EditTaskDialog from '@/components/EditTaskDialog'
 import { useTasksStore } from '@/stores/tasksStore.ts'
 import columns from '@/components/TasksTable/Columns'
+import { Toaster } from '@/components/ui/toaster.tsx'
 import { Card } from '@/components/ui/card.tsx'
 import Table from '@/components/TasksTable'
 import Header from '@/components/Header'
@@ -29,6 +30,7 @@ export default function Dashboard() {
         </Card>
       </main>
       <EditTaskDialog />
+      <Toaster />
     </>
   )
 }

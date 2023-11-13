@@ -1,4 +1,5 @@
 import { PlusCircledIcon, Cross2Icon } from '@radix-ui/react-icons'
+import { useToast } from '@/components/ui/use-toast.ts'
 import { useTasksStore } from '@/stores/tasksStore.ts'
 import { priorities, statuses } from '@/lib/data.ts'
 import { Button } from '@/components/ui/button'
@@ -17,6 +18,15 @@ export default function TableToolbar<TData>({
 }: TableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0
   const { createTask } = useTasksStore()
+  const { toast } = useToast()
+
+  const handleAdd = () => {
+    createTask()
+    toast({
+      description: 'Task has been successfully created ✅',
+      title: 'Success!',
+    })
+  }
 
   return (
     <div className="flex items-center justify-between">
@@ -36,7 +46,7 @@ export default function TableToolbar<TData>({
               />
               <Button
                 className="flex !h-8 items-center px-3 py-2"
-                onClick={createTask}
+                onClick={handleAdd}
                 variant="default"
               >
                 <PlusCircledIcon className="mr-2" height={16} width={16} />
